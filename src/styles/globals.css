@@ -1,0 +1,325 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ═══════════════════════════════════════════
+   DESIGN TOKENS (CSS Custom Properties)
+   ═══════════════════════════════════════════ */
+:root {
+  --navy: #0A1628;
+  --navy-light: #0F1D32;
+  --charcoal: #1E2A3A;
+  --charcoal-light: #253445;
+  --gold: #C9A84C;
+  --gold-light: #E8C97A;
+  --gold-muted: #8B7355;
+  --gold-dark: #A68B3C;
+  --offwhite: #F5F0E8;
+  --white: #FFFFFF;
+  
+  --font-display: 'Cormorant Garamond', serif;
+  --font-heading: 'Montserrat', sans-serif;
+  --font-body: 'Lato', sans-serif;
+  
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --transition-smooth: 0.6s var(--ease-out-expo);
+
+  /* ─── Fluid Spacing ─── */
+  --section-py: clamp(3rem, 7vh, 6rem);
+  --gap-lg: clamp(1.5rem, 3vw, 3rem);
+  --gap-md: clamp(1rem, 2vw, 2rem);
+  --gap-sm: clamp(0.5rem, 1vw, 1rem);
+}
+
+/* ═══════════════════════════════════════════
+   BASE RESETS
+   ═══════════════════════════════════════════ */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: auto; /* Lenis handles smooth scroll */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--navy);
+  color: var(--white);
+  overflow-x: hidden;
+  font-weight: 300;
+  line-height: 1.7;
+}
+
+::selection {
+  background-color: var(--gold);
+  color: var(--navy);
+}
+
+/* ═══════════════════════════════════════════
+   SCROLLBAR
+   ═══════════════════════════════════════════ */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--navy);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--gold-muted);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gold);
+}
+
+/* ═══════════════════════════════════════════
+   UTILITY CLASSES
+   ═══════════════════════════════════════════ */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+@layer components {
+  /* Section label — the small uppercase "ABOUT", "SERVICES" etc */
+  .section-label {
+    @apply font-heading text-xs font-bold uppercase tracking-[0.3em] text-gold;
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .section-label::before {
+    content: '';
+    display: block;
+    width: 2rem;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  /* Gold gradient text */
+  .text-gradient-gold {
+    background: linear-gradient(135deg, var(--gold), var(--gold-light), var(--gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Gold underline for links */
+  .gold-underline {
+    position: relative;
+  }
+
+  .gold-underline::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.4s var(--ease-out-expo);
+  }
+
+  .gold-underline:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  /* Glass card */
+  .glass-card {
+    background: rgba(20, 32, 48, 0.85);
+    border: 1px solid rgba(201, 168, 76, 0.08);
+    transition: border-color 0.5s var(--ease-out-expo), transform 0.5s var(--ease-out-expo), box-shadow 0.5s var(--ease-out-expo);
+  }
+
+  .glass-card:hover {
+    border-color: rgba(201, 168, 76, 0.25);
+    transform: translateY(-8px);
+    box-shadow: 0 25px 60px -15px rgba(201, 168, 76, 0.1);
+  }
+
+  /* Grain overlay — static texture, no animation for performance */
+  .grain-overlay::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+}
+
+/* ═══════════════════════════════════════════
+   GOLD PARTICLE CANVAS (Hero background)
+   ═══════════════════════════════════════════ */
+.hero-gradient {
+  background: 
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(201, 168, 76, 0.08), transparent),
+    radial-gradient(ellipse 60% 40% at 80% 80%, rgba(201, 168, 76, 0.04), transparent),
+    radial-gradient(ellipse 50% 60% at 20% 60%, rgba(30, 42, 58, 0.8), transparent),
+    var(--navy);
+}
+
+/* ═══════════════════════════════════════════
+   ANIMATED GRADIENT BORDER
+   ═══════════════════════════════════════════ */
+.animated-border {
+  position: relative;
+}
+
+.animated-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    transparent 0%,
+    var(--gold-muted) 30%,
+    var(--gold) 50%,
+    var(--gold-muted) 70%,
+    transparent 100%
+  );
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.5s var(--ease-out-expo);
+}
+
+.animated-border:hover::before {
+  opacity: 1;
+}
+
+/* ═══════════════════════════════════════════
+   FORM INPUT STYLES
+   ═══════════════════════════════════════════ */
+.form-input {
+  width: 100%;
+  padding: 1rem 0;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(139, 115, 85, 0.3);
+  color: var(--offwhite);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 300;
+  transition: border-color 0.4s var(--ease-out-expo), background 0.4s;
+  outline: none;
+  border-radius: 0;
+  -webkit-appearance: none;
+}
+
+.form-input:focus {
+  border-bottom-color: var(--gold);
+}
+
+/* Filled state — subtle indicator */
+.form-input:not(:placeholder-shown) {
+  border-bottom-color: rgba(201, 168, 76, 0.4);
+}
+
+.form-input::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+  font-weight: 300;
+}
+
+/* ── Autofill override (Chrome, Safari, Edge) ── */
+.form-input:-webkit-autofill,
+.form-input:-webkit-autofill:hover,
+.form-input:-webkit-autofill:focus,
+.form-input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px var(--navy-light) inset !important;
+  box-shadow: 0 0 0 1000px var(--navy-light) inset !important;
+  -webkit-text-fill-color: var(--offwhite) !important;
+  caret-color: var(--offwhite);
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE HELPERS
+   ═══════════════════════════════════════════ */
+.container-custom {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 clamp(1.5rem, 4vw, 4rem);
+}
+
+/* ═══════════════════════════════════════════
+   PAGE TRANSITION
+   ═══════════════════════════════════════════ */
+.page-transition-enter {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.page-transition-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.6s var(--ease-out-expo);
+}
+
+.page-transition-exit {
+  opacity: 1;
+}
+
+.page-transition-exit-active {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* ═══════════════════════════════════════════
+   TIMELINE
+   ═══════════════════════════════════════════ */
+.timeline-line {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--gold-muted) 15%,
+    var(--gold) 50%,
+    var(--gold-muted) 85%,
+    transparent
+  );
+}
+
+.timeline-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 20px rgba(201, 168, 76, 0.4);
+  position: relative;
+}
+
+.timeline-dot::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 1px solid rgba(201, 168, 76, 0.3);
+}
