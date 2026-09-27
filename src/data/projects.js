@@ -23,7 +23,7 @@ export const projects = [
       'Technical Production',
     ],
     gallery: [
-      '/images/projects/Tarfeeh Fakieh/ChatGPT Image Jul 20, 2026, 07_26_39 PM.png',
+      'https://res.cloudinary.com/dgqequjgk/image/upload/v1790539756/ChatGPT_Image_Jul_20_2026_07_26_39_PM_n8zgux.png',
     ],
   },
   {
