@@ -164,7 +164,7 @@ export default function About() {
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2/3 h-2/3 bg-gold/5 blur-[80px] rounded-full pointer-events-none" />
 
                 <img
-                  src="/images/about img.png"
+                  src="https://res.cloudinary.com/dgqequjgk/image/upload/v1790540446/about_img_gpjivv.png"
                   alt="Omar - Event Manager"
                   className="relative z-10 w-[105%] max-w-none h-auto object-contain max-h-[700px] drop-shadow-2xl -ml-2 lg:-ml-4"
                   style={{
